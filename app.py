@@ -105,15 +105,15 @@ def mensagem():
 
 @app.route('/api/versao')
 def versao():
-    versao = 3.12
-    if versao:
-        return f"A versão atual da API é {versao}."
+    versao = request.args.get('versao')
+    if versao is None:
+        return "Versão padrao: 1.0.0"
+    
+    versao = float(versao)
+    if versao >= 2.0:
+        return "Versão atualizada."
     else:
-        try:
-            raise ValueError("Versão não disponível.")
-        except ValueError as e:
-            return str(e)
-        
+        return "Versão desatualizada."
 
 @app.route('/media')
 def media():
